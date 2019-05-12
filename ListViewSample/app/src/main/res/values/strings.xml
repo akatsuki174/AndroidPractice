@@ -1,4 +1,6 @@
 <resources>
+    <string name="topButton1">リストサンプル1</string>
+    <string name="topButton2">リストサンプル2</string>
     <string name="app_name">リスト選択サンプル</string>
     <string-array name="lvItems">
         <item>唐揚げ定食</item>
