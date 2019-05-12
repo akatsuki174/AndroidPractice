@@ -15,4 +15,12 @@
         <item>焼き魚定食</item>
         <item>焼肉定食</item>
     </string-array>
+    <string name="dialogTitle">注文確認</string>
+    <string name="dialogMsg">選択された定食を注文します。よろしいですか？</string>
+    <string name="dialogBtnOk">注文</string>
+    <string name="dialogBtnNg">キャンセル</string>
+    <string name="dialogBtnNu">問い合わせ</string>
+    <string name="dialogOkToast">ご注文ありがとうございます。</string>
+    <string name="dialogNgToast">ご注文をキャンセルしました。</string>
+    <string name="dialogNuToast">お問い合わせをお知らせください。</string>
 </resources>
