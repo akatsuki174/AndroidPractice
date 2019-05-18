@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">ConstraintLayoutSample</string>
     <string name="tvTitle">必要な情報を入力してください</string>
-    <string name="tbName">名前</string>
+    <string name="tvName">名前</string>
     <string name="tvMail">メールアドレス</string>
     <string name="tvComment">質問内容</string>
     <string name="btConfirm">確認</string>
