@@ -2,6 +2,7 @@ package com.example.intentsample
 
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
+import android.view.View
 import kotlinx.android.synthetic.main.activity_menu_thanks.*
 
 class MenuThanksActivity : AppCompatActivity() {
@@ -12,5 +13,9 @@ class MenuThanksActivity : AppCompatActivity() {
 
         tvMenuName.text = intent.getStringExtra("menuName")
         tvMenuPrice.text = intent.getStringExtra("menuPrice")
+    }
+
+    fun onBackButtonClick(view: View) {
+        finish()
     }
 }
