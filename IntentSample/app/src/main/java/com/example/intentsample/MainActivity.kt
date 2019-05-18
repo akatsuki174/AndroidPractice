@@ -1,5 +1,6 @@
 package com.example.intentsample
 
+import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.SimpleAdapter
@@ -30,6 +31,13 @@ class MainActivity : AppCompatActivity() {
         val adapter = SimpleAdapter(this, menuList, android.R.layout.simple_list_item_2, from, to)
         lvMenu.adapter = adapter
 
+        lvMenu.setOnItemClickListener { parent, view, position, id ->
+            val item = parent.getItemAtPosition(position) as Map<String, String>
+            val intent = Intent(this, MenuThanksActivity::class.java)
+            intent.putExtra("menuName", item["name"])
+            intent.putExtra("menuPrice", item["price"])
+            startActivity(intent)
+        }
     }
 
     private fun createMenu(name: String, price: String): Map<String, String> {
