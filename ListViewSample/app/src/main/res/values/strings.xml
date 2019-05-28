@@ -24,4 +24,13 @@
     <string name="dialogOkToast">ご注文ありがとうございます。</string>
     <string name="dialogNgToast">ご注文をキャンセルしました。</string>
     <string name="dialogNuToast">お問い合わせをお知らせください。</string>
+    <string name="tvMenuUnit">円</string>
+    <string name="menuListOptionsTeighoku">定食</string>
+    <string name="menuListOptionsCurry">カレー</string>
+    <string name="menuListContextDesc">説明を表示</string>
+    <string name="menuListContextOrder">ご注文</string>
+    <string name="menuListContextHeader">操作を選んでください</string>
+    <string name="tvThxTitle">注文終了</string>
+    <string name="tvThxDesc">以下のメニューのご注文を付けつけました。¥nご注文ありがとうございます。</string>
+    <string name="btThxBack">リストに戻る</string>
 </resources>
