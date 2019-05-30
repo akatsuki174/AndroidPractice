@@ -4,7 +4,7 @@ import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.SimpleAdapter
-import kotlinx.android.synthetic.main.activity_list_sample3.*
+import kotlinx.android.synthetic.main.activity_list_sample_3.*
 
 class ListSample3Activity : AppCompatActivity() {
 
@@ -16,7 +16,7 @@ class ListSample3Activity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_list_sample3)
+        setContentView(R.layout.activity_list_sample_3)
         menuList = createTeishokuList()
         val adapter = SimpleAdapter(this, menuList, R.layout.row, FROM, TO)
         lvMenu.adapter = adapter
