@@ -8,7 +8,7 @@ import kotlinx.android.synthetic.main.activity_list_sameple_2.*
 
 class ListSample2Activity : AppCompatActivity() {
 
-    private val clickListener = AdapterView.OnItemClickListener { parent, view, position, id ->
+    private val clickListener = AdapterView.OnItemClickListener { _, _, _, _ ->
         val dialogFragment = OrderConfirmDialogFragment()
         dialogFragment.show(supportFragmentManager, "OrderConfirmDialogFragment")
     }

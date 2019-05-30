@@ -20,7 +20,7 @@ class ListSample3Activity : AppCompatActivity() {
         menuList = createTeishokuList()
         val adapter = SimpleAdapter(this, menuList, R.layout.row, FROM, TO)
         lvMenu.adapter = adapter
-        lvMenu.setOnItemClickListener { parent, view, position, id ->
+        lvMenu.setOnItemClickListener { parent, _, position, _ ->
             val item = parent.getItemAtPosition(position) as Map<String, Any>
             val intent = Intent(this, MenuThanksActivity::class.java)
             val menuName = item["name"].toString()
@@ -35,14 +35,14 @@ class ListSample3Activity : AppCompatActivity() {
     private fun createTeishokuList(): List<Map<String, Any>> {
         val menuList = mutableListOf<Map<String, Any>>()
         var menu = mutableMapOf<String, Any>()
-        menu.put("name", "唐揚げ定食")
-        menu.put("price", "800")
-        menu.put("desc", "若鳥の唐揚げにサラダ、ご飯とお味噌汁が付きます。")
+        menu["name"] = "唐揚げ定食"
+        menu["price"] = "800"
+        menu["desc"] = "若鳥の唐揚げにサラダ、ご飯とお味噌汁が付きます。"
         menuList.add(menu)
         menu = mutableMapOf()
-        menu.put("name", "ハンバーグ定食")
-        menu.put("price", "850")
-        menu.put("desc", "手捏ねハンバーグにサラダ、ご飯とお味噌汁が付きます。")
+        menu["name"] = "ハンバーグ定食"
+        menu["price"] = "850"
+        menu["desc"] = "手捏ねハンバーグにサラダ、ご飯とお味噌汁が付きます。"
         menuList.add(menu)
         return menuList
     }

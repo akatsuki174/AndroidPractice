@@ -11,9 +11,9 @@ class ListSample1Activity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_list_sameple_1)
 
-        lvMenu.setOnItemClickListener { parent, view, position, id ->
+        lvMenu.setOnItemClickListener { parent, _, position, _ ->
             val item = parent.getItemAtPosition(position)
-            val str = "あなたが選んだ定食は" + item
+            val str = "あなたが選んだ定食は$item"
             Toast.makeText(this, str, Toast.LENGTH_LONG).show()
         }
     }
