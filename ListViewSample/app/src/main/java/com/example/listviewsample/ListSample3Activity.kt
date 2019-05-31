@@ -4,6 +4,7 @@ import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
+import android.view.MenuItem
 import android.widget.SimpleAdapter
 import kotlinx.android.synthetic.main.activity_list_sample_3.*
 
@@ -48,8 +49,36 @@ class ListSample3Activity : AppCompatActivity() {
         return menuList
     }
 
+    private fun createCurryList(): List<Map<String, Any>> {
+        val menuList = mutableListOf<Map<String, Any>>()
+        var menu = mutableMapOf<String, Any>()
+        menu["name"] = "ビーフカレー"
+        menu["price"] = "520"
+        menu["desc"] = "特選のスパイスをきかせた国産ビーフ100%のカレーです。"
+        menuList.add(menu)
+        menu = mutableMapOf()
+        menu["name"] = "ポークカレー"
+        menu["price"] = "420"
+        menu["desc"] = "特選のスパイスをきかせた国産ポーク100%のカレーです。"
+        menuList.add(menu)
+        return menuList
+    }
+
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.menu_optiona_menu_list, menu)
         return super.onCreateOptionsMenu(menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+        val itemId = item?.itemId
+        menuList = when (itemId) {
+            R.id.menuListOptionTeishoku -> createTeishokuList()
+            R.id.menuListOptionCurry -> createCurryList()
+            else -> createTeishokuList()
+        }
+        val adapter = SimpleAdapter(this, menuList, R.layout.row, FROM, TO)
+        lvMenu.adapter = adapter
+
+        return super.onOptionsItemSelected(item)
     }
 }
