@@ -3,6 +3,7 @@ package com.example.listviewsample
 import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.view.Menu
 import android.widget.SimpleAdapter
 import kotlinx.android.synthetic.main.activity_list_sample_3.*
 
@@ -45,5 +46,10 @@ class ListSample3Activity : AppCompatActivity() {
         menu["desc"] = "手捏ねハンバーグにサラダ、ご飯とお味噌汁が付きます。"
         menuList.add(menu)
         return menuList
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.menu_optiona_menu_list, menu)
+        return super.onCreateOptionsMenu(menu)
     }
 }
