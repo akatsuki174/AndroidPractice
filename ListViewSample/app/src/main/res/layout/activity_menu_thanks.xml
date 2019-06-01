@@ -37,8 +37,4 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/tvMenuPrice"/>
     </LinearLayout>
-    <Button
-            android:text="@string/btThxBack"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" android:id="@+id/button" android:onClick="onBackButtonClick"/>
 </LinearLayout>
