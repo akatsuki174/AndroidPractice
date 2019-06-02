@@ -3,8 +3,10 @@ package com.example.listviewsample
 import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.view.ContextMenu
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
 import android.widget.SimpleAdapter
 import kotlinx.android.synthetic.main.activity_list_sample_3.*
 
@@ -32,6 +34,7 @@ class ListSample3Activity : AppCompatActivity() {
             intent.putExtra("menuPrice", menuPrice + "円")
             startActivity(intent)
         }
+        registerForContextMenu(lvMenu)
     }
 
     private fun createTeishokuList(): List<Map<String, Any>> {
@@ -80,5 +83,11 @@ class ListSample3Activity : AppCompatActivity() {
         lvMenu.adapter = adapter
 
         return super.onOptionsItemSelected(item)
+    }
+
+    override fun onCreateContextMenu(menu: ContextMenu?, v: View?, menuInfo: ContextMenu.ContextMenuInfo?) {
+        super.onCreateContextMenu(menu, v, menuInfo)
+        menuInflater.inflate(R.menu.menu_context_menu_list, menu)
+        menu?.setHeaderTitle(R.string.menuListContextHeader)
     }
 }
