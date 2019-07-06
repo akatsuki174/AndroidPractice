@@ -5,8 +5,8 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.ViewGroup
 
-class RecyclerAdapter(private val context: Context) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
+class RecyclerAdapter(private val context: Context) : RecyclerView.Adapter<RecyclerViewHolder>() {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerViewHolder {
         val view = LayoutInflater.from(context).inflate(R.layout.row, parent, false)
         return RecyclerViewHolder(view)
     }
@@ -15,5 +15,5 @@ class RecyclerAdapter(private val context: Context) : RecyclerView.Adapter<Recyc
         return 10
     }
 
-    override fun onBindViewHolder(p0: RecyclerView.ViewHolder, p1: Int) {}
+    override fun onBindViewHolder(holder: RecyclerViewHolder, positon: Int) {}
 }
