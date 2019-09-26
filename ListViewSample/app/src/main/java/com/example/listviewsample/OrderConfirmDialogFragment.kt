@@ -9,7 +9,7 @@ import android.widget.Toast
 
 class OrderConfirmDialogFragment : DialogFragment() {
 
-    private val clickListener = DialogInterface.OnClickListener { dialog, which ->
+    private val clickListener = DialogInterface.OnClickListener { _, which ->
         var msg = ""
         when (which) {
             DialogInterface.BUTTON_POSITIVE ->

@@ -3,7 +3,6 @@ package com.example.listviewsample
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.view.MenuItem
-import android.view.View
 import kotlinx.android.synthetic.main.activity_menu_thanks.*
 
 class MenuThanksActivity : AppCompatActivity() {

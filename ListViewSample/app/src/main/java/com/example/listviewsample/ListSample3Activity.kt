@@ -12,7 +12,7 @@ import kotlinx.android.synthetic.main.activity_list_sample_3.*
 
 class ListSample3Activity : AppCompatActivity() {
 
-    private lateinit var menuList: List<Map<String, Any>>
+    private var menuList: List<Map<String, Any>>? = null
     companion object {
         private val FROM = arrayOf("name", "price")
         private val TO = intArrayOf(R.id.tvMenuName, R.id.tvMenuPrice)
@@ -25,6 +25,7 @@ class ListSample3Activity : AppCompatActivity() {
         val adapter = SimpleAdapter(this, menuList, R.layout.row, FROM, TO)
         lvMenu.adapter = adapter
         lvMenu.setOnItemClickListener { parent, _, position, _ ->
+            @Suppress("UNCHECKED_CAST")
             val item = parent.getItemAtPosition(position) as Map<String, Any>
             val intent = Intent(this, MenuThanksActivity::class.java)
             val menuName = item["name"].toString()
