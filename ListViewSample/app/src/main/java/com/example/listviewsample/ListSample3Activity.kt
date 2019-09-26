@@ -7,7 +7,9 @@ import android.view.ContextMenu
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import android.widget.AdapterView
 import android.widget.SimpleAdapter
+import android.widget.Toast
 import kotlinx.android.synthetic.main.activity_list_sample_3.*
 
 class ListSample3Activity : AppCompatActivity() {
@@ -27,13 +29,7 @@ class ListSample3Activity : AppCompatActivity() {
         lvMenu.setOnItemClickListener { parent, _, position, _ ->
             @Suppress("UNCHECKED_CAST")
             val item = parent.getItemAtPosition(position) as Map<String, Any>
-            val intent = Intent(this, MenuThanksActivity::class.java)
-            val menuName = item["name"].toString()
-            val menuPrice = item["price"].toString()
-            intent.putExtra("menuName", menuName)
-            intent.putExtra("menuPrice", menuPrice.toInt())
-            intent.putExtra("menuPrice", menuPrice + "円")
-            startActivity(intent)
+            order(item)
         }
         registerForContextMenu(lvMenu)
     }
@@ -68,6 +64,15 @@ class ListSample3Activity : AppCompatActivity() {
         return menuList
     }
 
+    private fun order(menu: Map<String, Any>) {
+        val menuName = menu["name"].toString()
+        val menuPrice = menu["price"].toString()
+        val intent = Intent(this, MenuThanksActivity::class.java)
+        intent.putExtra("menuName", menuName)
+        intent.putExtra("menuPrice", menuPrice + "円")
+        startActivity(intent)
+    }
+
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.menu_optiona_menu_list, menu)
         return super.onCreateOptionsMenu(menu)
@@ -84,6 +89,23 @@ class ListSample3Activity : AppCompatActivity() {
         lvMenu.adapter = adapter
 
         return super.onOptionsItemSelected(item)
+    }
+
+    override fun onContextItemSelected(item: MenuItem?): Boolean {
+        val info = item?.menuInfo as AdapterView.AdapterContextMenuInfo
+        val listPosition = info.position
+        val menu = menuList?.get(listPosition)
+        val itemId = item?.itemId
+        when (itemId) {
+            R.id.menuListContextDesc -> {
+                val desc = menu?.get("desc") as String
+                Toast.makeText(this, desc, Toast.LENGTH_LONG).show()
+            }
+            R.id.menuListContextOrder -> {
+                menu?.let { order(it) }
+            }
+        }
+        return super.onContextItemSelected(item)
     }
 
     override fun onCreateContextMenu(menu: ContextMenu?, v: View?, menuInfo: ContextMenu.ContextMenuInfo?) {
