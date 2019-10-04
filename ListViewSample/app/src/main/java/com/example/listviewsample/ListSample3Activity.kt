@@ -95,8 +95,7 @@ class ListSample3Activity : AppCompatActivity() {
         val info = item?.menuInfo as AdapterView.AdapterContextMenuInfo
         val listPosition = info.position
         val menu = menuList?.get(listPosition)
-        val itemId = item?.itemId
-        when (itemId) {
+        when (item.itemId) {
             R.id.menuListContextDesc -> {
                 val desc = menu?.get("desc") as String
                 Toast.makeText(this, desc, Toast.LENGTH_LONG).show()
