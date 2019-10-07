@@ -23,5 +23,9 @@ class MainActivity : AppCompatActivity() {
             val intent = Intent(this, ListSample3Activity::class.java)
             startActivity(intent)
         }
+        button4.setOnClickListener {
+            val intent = Intent(this, FragmentSampleActivity::class.java)
+            startActivity(intent)
+        }
     }
 }

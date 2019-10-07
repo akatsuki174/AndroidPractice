@@ -28,4 +28,11 @@
             app:layout_constraintStart_toStartOf="parent" app:layout_constraintEnd_toEndOf="parent"
             android:id="@+id/button3" app:layout_constraintTop_toBottomOf="@+id/button2"
             android:layout_marginTop="32dp"/>
+    <Button
+            android:text="@string/topButton4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent" app:layout_constraintEnd_toEndOf="parent"
+            android:id="@+id/button4" app:layout_constraintTop_toBottomOf="@+id/button3"
+            android:layout_marginTop="32dp"/>
 </android.support.constraint.ConstraintLayout>
