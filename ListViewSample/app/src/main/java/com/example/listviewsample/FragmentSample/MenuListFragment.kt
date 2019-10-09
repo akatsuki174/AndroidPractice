@@ -1,6 +1,7 @@
 package com.example.listviewsample.FragmentSample
 
 
+import android.content.Intent
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.view.LayoutInflater
@@ -29,10 +30,13 @@ class MenuListFragment : Fragment() {
         val adapter = SimpleAdapter(activity, menuList, android.R.layout.simple_list_item_2, from, to)
         val listMenu = view.findViewById<ListView>(R.id.listMenu)
         listMenu.adapter = adapter
-
+        listMenu.setOnItemClickListener { parent, _, position, _ ->
+            @Suppress("UNCHECKED_CAST")
+            val item = parent.getItemAtPosition(position) as Map<String, Any>
+            order(item)
+        }
         return view
     }
-
 
     private fun createTeishokuList(): List<Map<String, Any>> {
         val menuList = mutableListOf<Map<String, Any>>()
@@ -45,6 +49,15 @@ class MenuListFragment : Fragment() {
         menu["price"] = "850"
         menuList.add(menu)
         return menuList
+    }
+
+    private fun order(menu: Map<String, Any>) {
+        val menuName = menu["name"].toString()
+        val menuPrice = menu["price"].toString()
+        val intent = Intent(activity, OrderCompletedActivity::class.java)
+        intent.putExtra("menuName", menuName)
+        intent.putExtra("menuPrice", menuPrice + "円")
+        startActivity(intent)
     }
 
 }
