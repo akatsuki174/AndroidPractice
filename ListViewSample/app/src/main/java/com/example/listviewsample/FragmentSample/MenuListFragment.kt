@@ -1,4 +1,4 @@
-package com.example.listviewsample
+package com.example.listviewsample.FragmentSample
 
 
 import android.os.Bundle
@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ListView
 import android.widget.SimpleAdapter
+import com.example.listviewsample.R
 
 /**
  * A simple [Fragment] subclass.
