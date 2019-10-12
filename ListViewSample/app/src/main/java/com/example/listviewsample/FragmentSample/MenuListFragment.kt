@@ -16,6 +16,8 @@ import com.example.listviewsample.R
  */
 class MenuListFragment : Fragment() {
 
+    private var isLayoutXLarge = true
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -38,6 +40,14 @@ class MenuListFragment : Fragment() {
         return view
     }
 
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+        val orderCompletedFrame = activity?.findViewById<View>(R.id.orderCompleteFrame)
+        if (orderCompletedFrame == null) {
+            isLayoutXLarge = false
+        }
+    }
+
     private fun createTeishokuList(): List<Map<String, Any>> {
         val menuList = mutableListOf<Map<String, Any>>()
         var menu = mutableMapOf<String, Any>()
@@ -54,10 +64,23 @@ class MenuListFragment : Fragment() {
     private fun order(menu: Map<String, Any>) {
         val menuName = menu["name"].toString()
         val menuPrice = menu["price"].toString()
-        val intent = Intent(activity, OrderCompletedActivity::class.java)
-        intent.putExtra("menuName", menuName)
-        intent.putExtra("menuPrice", menuPrice + "円")
-        startActivity(intent)
+
+        val bundle = Bundle()
+        bundle.putString("menuName", menuName)
+        bundle.putString("menuPrice", menuPrice)
+
+        if (isLayoutXLarge) {
+            val manager = fragmentManager
+            val transaction = manager?.beginTransaction()
+            val orderCompletedFragment = OrderCompletedFragment()
+            orderCompletedFragment.arguments = bundle
+            transaction?.replace(R.id.orderCompleteFrame, orderCompletedFragment)
+            transaction?.commit()
+        } else {
+            val intent = Intent(activity, OrderCompletedActivity::class.java)
+            intent.putExtras(bundle)
+            startActivity(intent)
+        }
     }
 
 }

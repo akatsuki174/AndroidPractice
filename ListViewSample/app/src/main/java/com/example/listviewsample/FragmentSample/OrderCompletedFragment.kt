@@ -16,13 +16,30 @@ import com.example.listviewsample.R
  */
 class OrderCompletedFragment : Fragment() {
 
+    private var isLayoutXLarge = true
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        val manager = fragmentManager
+        val menuListFragment = manager?.findFragmentById(R.id.fragmentMenuList)
+        if (menuListFragment == null) {
+            isLayoutXLarge = false
+        }
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+
+        var extras: Bundle? = Bundle()
+        if (isLayoutXLarge) {
+            extras = arguments
+        } else {
+            extras = activity?.intent?.extras
+        }
         val view = inflater.inflate(R.layout.fragment_order_completed, container, false)
         val intent = activity?.intent
-        val extras: Bundle? = intent?.extras
 
         var menuName = ""
         var menuPrice = ""
@@ -37,7 +54,14 @@ class OrderCompletedFragment : Fragment() {
 
         val btBackButton = view.findViewById<Button>(R.id.btBackButton)
         btBackButton.setOnClickListener {
-            activity?.finish()
+            if (isLayoutXLarge) {
+                val manager = fragmentManager
+                val transaction = manager?.beginTransaction()
+                transaction?.remove(this)
+                transaction?.commit()
+            } else {
+                activity?.finish()
+            }
         }
         return view
     }
