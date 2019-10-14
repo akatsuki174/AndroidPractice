@@ -6,6 +6,8 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.widget.Button
+import android.widget.CompoundButton
+import android.widget.Switch
 import java.io.IOException
 import java.net.URI
 
@@ -35,6 +37,9 @@ class MediaControlActivity : AppCompatActivity() {
         } catch (ex: IOException) {
             ex.stackTrace
         }
+
+        val loopSwitch = findViewById<Switch>(R.id.swLoop)
+        loopSwitch.setOnCheckedChangeListener(LoopSwitchChangedListener())
     }
 
     override fun onDestroy() {
@@ -79,8 +84,16 @@ class MediaControlActivity : AppCompatActivity() {
 
     private inner class PlayerCompletionListener: MediaPlayer.OnCompletionListener {
         override fun onCompletion(mp: MediaPlayer?) {
-            btPlay?.setText(R.string.bt_play_play)
+            if (player?.isLooping == false) {
+                btPlay?.setText(R.string.bt_play_play)
+            }
         }
 
+    }
+
+    private inner class LoopSwitchChangedListener: CompoundButton.OnCheckedChangeListener {
+        override fun onCheckedChanged(buttonView: CompoundButton?, isChecked: Boolean) {
+            player?.isLooping = isChecked
+        }
     }
 }
