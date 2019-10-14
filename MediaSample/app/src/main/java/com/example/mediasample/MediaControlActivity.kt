@@ -56,6 +56,18 @@ class MediaControlActivity : AppCompatActivity() {
         }
     }
 
+    fun onBackButtonClick(view: View) {
+        player?.seekTo(0)
+    }
+
+    fun onForwardButtonClick(view: View) {
+        val duration = player?.duration
+        player?.seekTo(duration ?: 0)
+        if (player?.isPlaying == false) {
+            player?.start()
+        }
+    }
+
     private inner class PlayerPreparedListener: MediaPlayer.OnPreparedListener {
         override fun onPrepared(mp: MediaPlayer?) {
             btPlay?.isEnabled = true
