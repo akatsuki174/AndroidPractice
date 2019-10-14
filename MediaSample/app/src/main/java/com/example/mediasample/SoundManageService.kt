@@ -1,11 +1,16 @@
 package com.example.mediasample
 
+import android.app.NotificationChannel
+import android.app.NotificationManager
 import android.app.Service
+import android.content.Context
 import android.content.Intent
 import android.media.MediaPlayer
 import android.net.Uri
 import android.os.IBinder
+import androidx.core.app.NotificationCompat
 import java.io.IOException
+import java.nio.channels.Channel
 
 class SoundManageService : Service() {
 
@@ -14,6 +19,13 @@ class SoundManageService : Service() {
     override fun onCreate() {
         super.onCreate()
         player = MediaPlayer()
+
+        val id = "soundmanagerservice_notification_channel"
+        val name = getString(R.string.notification_channel_name)
+        val importance = NotificationManager.IMPORTANCE_DEFAULT
+        val channel = NotificationChannel(id, name, importance)
+        val manager = getSystemService((Context.NOTIFICATION_SERVICE)) as NotificationManager
+        manager.createNotificationChannel(channel)
     }
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
@@ -52,6 +64,16 @@ class SoundManageService : Service() {
 
     private inner class PlayerCompletionListener: MediaPlayer.OnCompletionListener {
         override fun onCompletion(mp: MediaPlayer?) {
+            val builder = NotificationCompat.Builder(
+                this@SoundManageService,
+                "soundmanagerservice_notification_channel"
+            )
+            builder.setSmallIcon(android.R.drawable.ic_dialog_info)
+            builder.setContentTitle(getString(R.string.msg_notification_title_finish))
+            builder.setContentText(getString(R.string.msg_notification_text_finish))
+            val notification = builder.build()
+            val manager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+            manager.notify(0, notification)
             stopSelf()
         }
 
