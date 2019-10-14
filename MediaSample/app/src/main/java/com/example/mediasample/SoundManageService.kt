@@ -2,6 +2,7 @@ package com.example.mediasample
 
 import android.app.NotificationChannel
 import android.app.NotificationManager
+import android.app.PendingIntent
 import android.app.Service
 import android.content.Context
 import android.content.Intent
@@ -58,6 +59,22 @@ class SoundManageService : Service() {
     private inner class PlayerPreparedListener: MediaPlayer.OnPreparedListener {
         override fun onPrepared(mp: MediaPlayer?) {
             mp?.start()
+
+            val builder = NotificationCompat.Builder(
+                this@SoundManageService,
+                "soundmanagerservice_notification_channel"
+            )
+            builder.setSmallIcon(android.R.drawable.ic_dialog_info)
+            builder.setContentTitle(getString(R.string.msg_notification_title_start))
+            builder.setContentText(getString(R.string.msg_notification_text_start))
+            val intent = Intent(this@SoundManageService, SoundStartActivity::class.java)
+            intent.putExtra("fromNotification", true)
+            val stopServiceIntent = PendingIntent.getActivity(this@SoundManageService, 0, intent, PendingIntent.FLAG_CANCEL_CURRENT)
+            builder.setContentIntent(stopServiceIntent)
+            builder.setAutoCancel(true)
+            val notification = builder.build()
+            val manager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+            manager.notify(1, notification)
         }
 
     }
