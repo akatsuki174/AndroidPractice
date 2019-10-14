@@ -16,7 +16,8 @@ class MainActivity : AppCompatActivity() {
             startActivity(intent)
         }
         button2.setOnClickListener {
-
+            val intent = Intent(this, SoundStartActivity::class.java)
+            startActivity(intent)
         }
     }
 }
