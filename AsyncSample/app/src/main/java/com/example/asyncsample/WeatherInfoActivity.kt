@@ -1,10 +1,23 @@
 package com.example.asyncsample
 
-import androidx.appcompat.app.AppCompatActivity
+import android.annotation.SuppressLint
+import android.os.AsyncTask
 import android.os.Bundle
 import android.widget.ListView
 import android.widget.SimpleAdapter
 import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
+import org.json.JSONException
+import org.json.JSONObject
+import java.io.BufferedReader
+import java.io.IOException
+import java.io.InputStream
+import java.io.InputStreamReader
+import java.net.HttpURLConnection
+import java.net.MalformedURLException
+import java.net.URL
+import javax.net.ssl.HttpsURLConnection
+
 
 class WeatherInfoActivity : AppCompatActivity() {
 
@@ -30,7 +43,13 @@ class WeatherInfoActivity : AppCompatActivity() {
             val cityName = item["name"]
             val cityId = item["id"]
             val tvCityName = findViewById<TextView>(R.id.tvCityName)
-            tvCityName.text = cityName + "の天気："
+            @SuppressLint("SetTextI18n")
+            tvCityName.text = "${cityName}の天気："
+
+            val tvWeatherTelop = findViewById<TextView>(R.id.tvWeatherTelop)
+            val tvWeatherDesc = findViewById<TextView>(R.id.tvWeatherDesc)
+            val receiver = WeatherInfoReceiver(tvWeatherTelop, tvWeatherDesc)
+            receiver.execute(cityId)
         }
     }
 
@@ -40,4 +59,74 @@ class WeatherInfoActivity : AppCompatActivity() {
         city["id"] = id
         return city
     }
+
+    private class WeatherInfoReceiver(_tvWeatherTelop: TextView, _tvWeatherDesc: TextView): AsyncTask<String, String, String>() {
+        @SuppressLint("StaticFieldLeak")
+        private val tvWeatherTelop: TextView = _tvWeatherTelop
+        @SuppressLint("StaticFieldLeak")
+        private val tvWeatherDesc: TextView = _tvWeatherDesc
+
+        override fun doInBackground(vararg params: String?): String {
+            val id = params[0]
+            val urlStr = "https://weather.livedoor.com/forecast/webservice/json/v1?city=$id"
+            var result = ""
+            var con: HttpURLConnection? = null
+            var inputStream: InputStream? = null
+            try {
+                val url = URL(urlStr)
+                con = url.openConnection() as HttpURLConnection
+                con.requestMethod = "GET"
+                con.connect()
+                inputStream = con.inputStream
+                result = is2String(inputStream)
+            } catch(ex: IOException) {
+                print("IOException")
+            } catch (ex: MalformedURLException) {
+                print("MalformedURLException")
+            } finally {
+                con?.disconnect()
+
+                if (inputStream != null) {
+                    try {
+                        inputStream.close()
+                    } catch (ex: IOException) {
+                    }
+                }
+            }
+            return result
+        }
+
+        override fun onPostExecute(result: String?) {
+            super.onPostExecute(result)
+            var telop = ""
+            var desc = ""
+            try {
+                val rootJSON = JSONObject(result)
+                val descriptionJSON = rootJSON.getJSONObject("description")
+                desc = descriptionJSON.getString("text")
+                val forecasts = rootJSON.getJSONArray("forecasts")
+                val forecastNow = forecasts.getJSONObject(0)
+                telop = forecastNow.getString("telop")
+            } catch (ex: JSONException) {
+            }
+
+            tvWeatherTelop.text = telop
+            tvWeatherDesc.text = desc
+        }
+
+        private fun is2String(inputStream: InputStream): String {
+            val reader = BufferedReader(inputStream.reader())
+            val sb = StringBuilder()
+            reader.use { reader ->
+                var line = reader.readLine()
+                while (line != null) {
+                    sb.append(line)
+                    line = reader.readLine()
+                }
+            }
+            return sb.toString()
+        }
+    }
+
+
 }
