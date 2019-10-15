@@ -16,7 +16,8 @@ class MainActivity : AppCompatActivity() {
             startActivity(intent)
         }
         button2.setOnClickListener {
-
+            val intent = Intent(this, DynamicScrollArticleActivity::class.java)
+            startActivity(intent)
         }
     }
 }
