@@ -7,10 +7,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.widget.Toolbar
+import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.appbar.CollapsingToolbarLayout
+import org.w3c.dom.Text
 import java.util.ArrayList
 import java.util.HashMap
 
@@ -34,6 +37,9 @@ class ScrollListActivity : AppCompatActivity() {
         val menuList = createTeishokuList()
         val adapter = RecyclerListAdapter(menuList)
         lvMenu.adapter = adapter
+
+        val decorator = DividerItemDecoration(this, layout.orientation)
+        lvMenu.addItemDecoration(decorator)
     }
 
     private fun createTeishokuList(): List<Map<String, Any>> {
@@ -73,6 +79,7 @@ class ScrollListActivity : AppCompatActivity() {
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerListViewHolder {
             val inflater = LayoutInflater.from(this@ScrollListActivity)
             val view = inflater.inflate(R.layout.row, parent, false)
+            view.setOnClickListener(ItemClickListener())
             return RecyclerListViewHolder(view)
         }
 
@@ -84,5 +91,15 @@ class ScrollListActivity : AppCompatActivity() {
             holder.tvMenuName.text = menuName
             holder.tvMenuPrice.text = menuPriceStr
         }
+    }
+
+    private inner class ItemClickListener: View.OnClickListener {
+        override fun onClick(view: View?) {
+            val tvMenuName = view?.findViewById<TextView>(R.id.tvMenuName)
+            val menuName = tvMenuName?.text.toString()
+            val msg = getString(R.string.msg_header) + menuName
+            Toast.makeText(this@ScrollListActivity, msg, Toast.LENGTH_SHORT).show()
+        }
+
     }
 }
