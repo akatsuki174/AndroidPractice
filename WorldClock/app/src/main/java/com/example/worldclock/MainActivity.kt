@@ -13,5 +13,10 @@ class MainActivity : AppCompatActivity() {
 
         val defaultTimeZone = TimeZone.getDefault()
         timeZone.text = defaultTimeZone.displayName
+
+        add.setOnClickListener {
+            val intent = Intent(this, TimeZoneSelectActivity::class.java)
+            startActivityForResult(intent, 1)
+        }
     }
 }

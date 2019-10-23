@@ -38,7 +38,7 @@ class TimeZoneAdapter(private val context: Context,
     }
 
     private fun createView(parent: ViewGroup?): View {
-        val view = inflater.inflate(R.layout.list_item_zone_row, parent, false)
+        val view = inflater.inflate(R.layout.list_time_zone_row, parent, false)
         view.tag = ViewHolder(view)
         return view
     }
